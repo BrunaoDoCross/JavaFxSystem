@@ -11,9 +11,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Main.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("TelaDeLogin.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);

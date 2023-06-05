@@ -1,5 +1,6 @@
-package application;
+package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -9,15 +10,24 @@ import javax.swing.JOptionPane;
 import entity.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import utils.CriptografiaAES;
 import utils.UsuarioJsonUtil;
 
-public class LoginController implements Initializable {
-
+public class TelaDeCadastroController implements Initializable {
+	
+	private Stage stage;
+	private Scene scene;
+	private Parent root;
+	
 	@FXML
 	private Button btnEntrar;
 
@@ -42,7 +52,17 @@ public class LoginController implements Initializable {
 
 	List<Usuario> listaDeUsuarios = UsuarioJsonUtil.carregarUsuarios();
 	Usuario usuario;
-
+	
+	@FXML
+	public void abrirTelaDeLogin(ActionEvent event) throws IOException {
+		root = FXMLLoader.load(getClass().getResource("/application/TelaDeLogin.fxml"));
+		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 	@FXML
 	void actCadastrar(ActionEvent event) {
 		if (txtLogin.getText().isBlank() || txtSenha.getText().isBlank() || txtNome.getText().isBlank() || txtIdade.getText().isBlank()) {
@@ -94,7 +114,6 @@ public class LoginController implements Initializable {
 		txtNome.setText("");
 		txtSenha.setText("");
 	}
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

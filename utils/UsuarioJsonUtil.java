@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import entity.Usuario;
 
 public class UsuarioJsonUtil {
-    private static final String FILE_PATH = "usuarios.json";
+    private static final String FILE_PATH = "persistence/usuarios.json";
 
     public static void persistirUsuario(Usuario usuario) {
         List<Usuario> usuarios = carregarUsuarios();

@@ -3,14 +3,14 @@ package entity;
 import utils.CriptografiaAES;
 
 public class Usuario {
-
+	
 	private long id;
 	private String nome;
 	private String idade;
 	private String login;
 	private String senha;
-
-
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -43,6 +43,6 @@ public class Usuario {
 	}
 	@Override
 	public String toString() {
-		return "Nome: " + CriptografiaAES.descriptografar(nome) + " | Idade: " + CriptografiaAES.descriptografar(idade) + " | Login: " + CriptografiaAES.descriptografar(login) + " | Senha: " + CriptografiaAES.descriptografar(senha);
+		return "ID: " + this.id + " | Nome: " + CriptografiaAES.descriptografar(nome) + " | Idade: " + CriptografiaAES.descriptografar(idade) + " | Login: " + CriptografiaAES.descriptografar(login) + " | Senha: " + CriptografiaAES.descriptografar(senha);
 	}
 }
