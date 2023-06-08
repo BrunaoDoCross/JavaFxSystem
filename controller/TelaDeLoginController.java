@@ -26,10 +26,8 @@ public class TelaDeLoginController implements Initializable {
 
 	List<Usuario> listaDeUsuarios;
 	Usuario usuario;
-
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
+	
+	private MainController controlador = new MainController();
 
 	@FXML
 	private Button btnEntrar;
@@ -50,10 +48,10 @@ public class TelaDeLoginController implements Initializable {
 	private TextField txtUsuarioLogin;
 
 	@FXML
-	void actEntrar(ActionEvent event) {
+	void actEntrar(ActionEvent event) throws IOException {
 
-		if (!isCamposVazios()) {
-			validarCredenciais();
+		if (!isCamposVazios() && validarCredenciais()) {
+			loginConcluido(event);
 		}
 	}
 
@@ -61,21 +59,20 @@ public class TelaDeLoginController implements Initializable {
 	void actErroOk(ActionEvent event) {
 		esconderErro();
 	}
-	
+
 	@FXML
 	public void abrirTelaDeCadastro(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/application/TelaDeCadastro.fxml"));
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setResizable(false);
-		stage.setScene(scene);
-		stage.show();
+		controlador.abrirTelaDeCadastro(event);
 	}
 
 	// -----> METODOS SEM EVENTOS <-----
 	public void aoIniciar() {
 		limparCampos();
 		esconderErro();
+	}
+
+	public void loginConcluido(ActionEvent event) throws IOException {
+		controlador.abrirTelaMenuPrincipal(event);
 	}
 
 	public void limparCampos() {
@@ -117,21 +114,21 @@ public class TelaDeLoginController implements Initializable {
 
 	}
 
-	public void validarCredenciais() {
+	public boolean validarCredenciais() {
 		listaDeUsuarios = UsuarioJsonUtil.carregarUsuarios();
-		usuario = new Usuario();
 
 		for (Usuario u : listaDeUsuarios) {
 			if (CriptografiaAES.descriptografar(u.getLogin()).equals(txtUsuarioLogin.getText())
 					&& CriptografiaAES.descriptografar(u.getSenha()).equals(txtSenhaLogin.getText())) {
 				habilitarErro("Usuário e senha encontrados!");
-				break;
-			} else {
-				habilitarErro("Usuário e/ou Senha não encontrados!");
+				return true;
 			}
 		}
+		habilitarErro("Usuário e/ou Senha não encontrados!");
+		return false;
 	}
-
+	
+	
 	// -----> AO INICIALIZAR <-----
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

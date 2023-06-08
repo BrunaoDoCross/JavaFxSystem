@@ -10,26 +10,21 @@ import javax.swing.JOptionPane;
 import entity.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 import utils.CriptografiaAES;
+import utils.CssSamples;
 import utils.UsuarioJsonUtil;
 
 public class TelaDeCadastroController implements Initializable {
 	
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
+	private MainController controlador = new MainController();
 	
 	@FXML
-	private Button btnEntrar;
+	private Button btnCadastrar;
 
 	@FXML
 	private TextArea txtArea;
@@ -48,19 +43,14 @@ public class TelaDeCadastroController implements Initializable {
 
 	@FXML
 	private TextField txtSenha;
-
-
+	
+	
 	List<Usuario> listaDeUsuarios = UsuarioJsonUtil.carregarUsuarios();
 	Usuario usuario;
 	
 	@FXML
-	public void abrirTelaDeLogin(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/application/TelaDeLogin.fxml"));
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setResizable(false);
-		stage.setScene(scene);
-		stage.show();
+	public void abrirTelaDeLogin(ActionEvent event) throws IOException{
+		controlador.abrirTelaDeLogin(event);
 	}
 	
 	@FXML
@@ -92,11 +82,26 @@ public class TelaDeCadastroController implements Initializable {
 			txtNome.requestFocus();
 		}
 	}
+	
+    @FXML
+    void actDeletar(ActionEvent event) {
+    	String login = JOptionPane.showInputDialog(null, "Digite o Login do usuário que deseja remover", "Remover Usuário", 0);
+    	UsuarioJsonUtil.removerUsuario(login);
+    	atualizarTabela();
+    }
+	
+    @FXML
+    // fx Efeito de aumentar botão ao passar mouse
+    void fxMouseIn(MouseEvent event) {
+    	Button b = (Button) event.getSource();
+    	b.setStyle(CssSamples.animaMouseIn(10, 10));
+    }
 
     @FXML
-    void actRemover(ActionEvent event) {
-    	UsuarioJsonUtil.removerUsuario(txtLoginRemover.getText());
-    	atualizarTabela();
+    // fx Voltar botão ao normal ao retirar mouse
+    void fxMouseOut(MouseEvent event) {
+    	Button b = (Button) event.getSource();
+    	b.setStyle(CssSamples.animaMouseBack());
     }
 
 	public void atualizarTabela() {
@@ -107,14 +112,15 @@ public class TelaDeCadastroController implements Initializable {
 		}
 		txtArea.setText(texto);
 	}
-
+	
 	public void limparCampos() {
 		txtLogin.setText("");
 		txtIdade.setText("");
 		txtNome.setText("");
 		txtSenha.setText("");
 	}
-
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		atualizarTabela();

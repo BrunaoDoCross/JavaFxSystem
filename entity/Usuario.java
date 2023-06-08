@@ -1,5 +1,6 @@
 package entity;
 
+
 import utils.CriptografiaAES;
 
 public class Usuario {

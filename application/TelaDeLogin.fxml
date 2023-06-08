@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="375.0" prefWidth="444.0" styleClass="background-black" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaDeLoginController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="450.0" styleClass="background-black" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaDeLoginController">
    <children>
       <TextField fx:id="txtUsuarioLogin" layoutX="80.0" layoutY="132.0" promptText="Usuário" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="240.0" />
       <PasswordField fx:id="txtSenhaLogin" layoutX="240.0" layoutY="131.0" prefHeight="26.0" prefWidth="153.0" promptText="Senha" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="80.0" />
